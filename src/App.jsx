@@ -1,7 +1,7 @@
-import ProductLIstingPage from "./pages/product-listing/ProductLIstingPage";
+import ProductListingPage from "./pages/product-listing/ProductListingPage";
 
 function App() {
-  return <ProductLIstingPage />;
+  return <ProductListingPage />;
 }
 
 export default App;

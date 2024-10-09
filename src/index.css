@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  box-sizing: border-box;
+  color: #010101;
+  margin: 0;
+  padding: 0 2rem;
+  font-family: "Manrope", sans-serif;
+}
+
+input,
+select {
+  border: 1px solid #e7e5e5;
+  background-color: #f2f0ea;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  min-width: 200px;
+}
+input:focus,
+select:focus {
+  border: 1px solid #a4a4a4;
+  outline: none;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  background-color: #edcf5d;
+  border-radius: 6px;
+}
