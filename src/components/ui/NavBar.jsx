@@ -10,7 +10,9 @@ function NavBar() {
   };
   return (
     <main className="flex items-center justify-between py-4 shadow-sm">
-      <img src={logo} alt="logo" className="w-32" />
+      <Link to={"/"}>
+        <img src={logo} alt="logo" className="w-32" />
+      </Link>
       <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/3">
         <div className="h-full">
           <IoSearch className="text-slate-500 text-lg" />
