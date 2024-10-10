@@ -21,7 +21,8 @@ select {
 }
 input:focus,
 select:focus {
-  outline: 1px solid #a4a4a4;
+  /* outline: 1px solid #a4a4a4; */
+  outline: none;
 }
 
 .btn {

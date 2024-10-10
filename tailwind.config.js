@@ -7,6 +7,7 @@ export default {
         primaryColor: "#edcf5d",
         secondaryColor: "#f2f0ea",
         borderColor: "#eeeeee",
+        selectBG: "#f5f5f5",
       },
       fontSize: {
         my14: "14px",
