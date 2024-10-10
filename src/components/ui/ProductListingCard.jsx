@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/whiteStar.svg";
 function ProductListingCard({ product }) {
-  const soldOut = useMemo(() => Math.random() < 0.3, []);
+  const soldOut = useMemo(() => Math.random() < 0.2, []);
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
   const [itemNumber, setItemNumber] = useState(0);
 
@@ -19,11 +19,10 @@ function ProductListingCard({ product }) {
     <main className="p-4 border-borderColor border rounded-[8px] flex relative flex-col h-full group">
       <div className="flex justify-center items-center mb-2">
         <img
-          className="group-hover:scale-105 transition-all duration-150 ease-in-out"
+          className="group-hover:scale-105 transition-all duration-150 ease-in-out w-[150px] h-[150px] object-cover"
           src={product.images[0]}
           alt={product.title}
           loading="lazy"
-          style={{ width: "150px", height: "150px", objectFit: "cover" }}
         />
       </div>
 
