@@ -6,6 +6,10 @@ export default {
       colors: {
         primaryColor: "#edcf5d",
         secondaryColor: "#f2f0ea",
+        borderColor: "#eeeeee",
+      },
+      fontSize: {
+        my14: "14px",
       },
     },
   },

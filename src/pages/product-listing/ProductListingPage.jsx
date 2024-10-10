@@ -1,18 +1,9 @@
 import { useEffect, useState } from "react";
-import CustomTable from "../../components/ui/CustomTable";
 import FilterSection from "../../components/ui/FilterSection";
-import ProducListingTableRow from "./components/ProducListingTableRow";
+import ProductListingCard from "../../components/ui/ProductListingCard";
 import { getAllProducts } from "./api-services/product-listing";
 
 function ProductListingPage() {
-  const productListingTableHeading = [
-    "Image",
-    "Name",
-    "Stock",
-    "Price",
-    "actions",
-  ];
-
   const [allProductsList, setAllProductsList] = useState([]);
   const setProductList = async () => {
     try {
@@ -28,14 +19,16 @@ function ProductListingPage() {
   }, []);
 
   return (
-    <>
-      <FilterSection />
-      <CustomTable
-        tableHeading={productListingTableHeading}
-        tableRow={<ProducListingTableRow />}
-        tableData={allProductsList}
-      />
-    </>
+    <section className="m-auto max-w-screen-2xl">
+      <nav className="sticky top-0 bg-white z-50">
+        <FilterSection />
+      </nav>
+      <section className="grid grid-cols-6 gap-4 mt-5">
+        {allProductsList.map((product) => (
+          <ProductListingCard key={product.id} product={product} />
+        ))}
+      </section>
+    </section>
   );
 }
 
