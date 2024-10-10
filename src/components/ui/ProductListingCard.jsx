@@ -1,13 +1,19 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
+import { TiTick } from "react-icons/ti";
 function ProductListingCard({ product }) {
   const soldOut = useMemo(() => Math.random() < 0.2, []);
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
   const [itemNumber, setItemNumber] = useState(0);
-
+  const [itemSelected, setItemSelected] = useState(false);
   const handleItemChange = (add) => {
     add ? setItemNumber((prev) => prev + 1) : setItemNumber((prev) => prev - 1);
+  };
+
+  const handleSelection = (e) => {
+    console.log(product);
+    setItemSelected(e.target.checked);
   };
 
   const handleNotification = () => {};
@@ -77,6 +83,21 @@ function ProductListingCard({ product }) {
           Sold Out
         </small>
       )}
+      <label
+        className={`${
+          itemSelected ? "bg-primaryColor grid place-items-center" : "hidden"
+        } absolute group-hover:block top-4 h-5 w-5 border-2 rounded-[4px] border-primaryColor cursor-pointer`}
+        htmlFor={`${"checkbox " + product.id}`}
+      >
+        {itemSelected && <TiTick className="text-white" />}
+      </label>
+
+      <input
+        onChange={handleSelection}
+        id={`${"checkbox " + product.id}`}
+        type="checkbox"
+        className="hidden"
+      />
     </main>
   );
 }
