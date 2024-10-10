@@ -25,8 +25,29 @@ select:focus {
   outline: none;
 }
 
-.btn {
-  padding: 0.5rem 1rem;
-  background-color: black;
-  border-radius: 6px;
+.cart {
+  position: relative;
+  cursor: pointer;
+}
+
+.item-count {
+  display: none;
+}
+
+.cart::after {
+  content: attr(data-count);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1rem;
+  width: 16px;
+  height: 16px;
+  background-color: #15803d;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
-import { TiTick } from "react-icons/ti";
+import { FaCheck } from "react-icons/fa";
 function ProductListingCard({ product }) {
   const soldOut = useMemo(() => Math.random() < 0.2, []);
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
@@ -86,10 +86,10 @@ function ProductListingCard({ product }) {
       <label
         className={`${
           itemSelected ? "bg-primaryColor grid place-items-center" : "hidden"
-        } absolute group-hover:block top-4 h-5 w-5 border-2 rounded-[4px] border-primaryColor cursor-pointer`}
+        } absolute group-hover:block top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
         htmlFor={`${"checkbox " + product.id}`}
       >
-        {itemSelected && <TiTick className="text-white" />}
+        {itemSelected && <FaCheck className="text-white w-3" />}
       </label>
 
       <input

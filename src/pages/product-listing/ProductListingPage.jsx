@@ -20,7 +20,7 @@ function ProductListingPage() {
   }, []);
 
   return (
-    <section className="m-auto max-w-screen-2xl">
+    <section>
       <header className="sticky top-0 bg-white z-50">
         <NavBar />
         <FilterSection />

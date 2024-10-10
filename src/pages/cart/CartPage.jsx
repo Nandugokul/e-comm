@@ -44,7 +44,7 @@ function CartPage() {
             <span className="font-[600]">Total Payable</span>
             <span className="font-bold text-[20px]">$200</span>
           </div>
-          <button className="btn text-my14 font-semibold text-white w-full mt-4">
+          <button className="bg-black py-2 px-4 rounded-md text-my14 font-semibold text-white w-full mt-4">
             Proceed to checkout
           </button>
           <button className="text-my14 font-semibold w-full mt-4">
