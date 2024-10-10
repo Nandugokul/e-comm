@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useMemo, useState } from "react";
-import starIcon from "../../../public/Icons-images/SVG/whiteStar.svg";
+import starIcon from "../../../public/Icons-images/SVG/star.svg";
 function ProductListingCard({ product }) {
   const soldOut = useMemo(() => Math.random() < 0.2, []);
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
@@ -30,9 +30,9 @@ function ProductListingCard({ product }) {
         <div className="space-y-2">
           <h6>{product.title}</h6>
           <div className="flex space-x-2 items-center">
-            <div className="flex space-x-1 items-center bg-green-700 px-1 rounded-[4px] text-white">
+            <div className="flex space-x-1 items-center bg-selectBG px-1 rounded-[4px] ">
               <img src={starIcon} className="w-3" alt="stars" />
-              <small>{product.rating}</small>
+              <small>{product.rating.toFixed(1)}</small>
             </div>
             <small className="text-gray-500">{reviewCount} reviews</small>
           </div>
@@ -63,15 +63,17 @@ function ProductListingCard({ product }) {
         <button
           onClick={handleAddToCart}
           className={`${itemNumber ? "hidden" : ""} ${
-            !soldOut ? "bg-black text-white" : "bg-white"
-          } py-2 text-black text-my14 font-semibold flex-1 flex items-center justify-center rounded-md border-black border`}
+            !soldOut
+              ? "bg-primaryColor text-white"
+              : "bg-white text-primaryColor"
+          } py-2  text-my14 font-semibold flex-1 flex items-center justify-center rounded-md border-primaryColor border`}
         >
           {soldOut ? "Notify" : "Add to Cart"}
         </button>
       </div>
 
       {soldOut && (
-        <small className="absolute top-4 right-4 rounded-md px-4 py-1 bg-primaryColor text-[12px]">
+        <small className="absolute top-4 right-4 rounded-md px-4 py-1 bg-selectBG text-[12px]">
           Sold Out
         </small>
       )}
