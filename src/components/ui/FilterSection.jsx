@@ -1,7 +1,16 @@
 import { MdOutlineReplay } from "react-icons/md";
 import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
+import { getProductData } from "../../store/productDataSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function FilterSection() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductData("mobile-accessories"));
+  }, [dispatch]);
+
   return (
     <section className="flex items-center justify-between py-5">
       <div className="flex space-x-4 items-center">

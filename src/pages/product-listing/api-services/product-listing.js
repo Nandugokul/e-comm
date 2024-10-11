@@ -1,5 +1,5 @@
 import axiosClient from "../../../config/axios";
 
-export const getAllProducts = () => {
-  return axiosClient.get("mobile-accessories");
+export const getAllProducts = (category) => {
+  return axiosClient.get(category);
 };

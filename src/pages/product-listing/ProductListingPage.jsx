@@ -1,23 +1,12 @@
-import { useMemo, useState } from "react";
 import FilterSection from "../../components/ui/FilterSection";
 import ProductListingCard from "../../components/ui/ProductListingCard";
-import { getAllProducts } from "./api-services/product-listing";
 import NavBar from "../../components/ui/NavBar";
+import { useSelector } from "react-redux";
 
 function ProductListingPage() {
-  const [allProductsList, setAllProductsList] = useState([]);
-  const setProductList = async () => {
-    try {
-      const products = await getAllProducts();
-      setAllProductsList(products.data.products);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+  const allProductsList = useSelector((state) => state.productData.data);
 
-  useMemo(() => {
-    setProductList();
-  }, []);
+  console.log("All Products List:", allProductsList);
 
   return (
     <section>
@@ -26,9 +15,13 @@ function ProductListingPage() {
         <FilterSection />
       </header>
       <section className="grid grid-cols-5 gap-4 mt-5">
-        {allProductsList.map((product) => (
-          <ProductListingCard key={product.id} product={product} />
-        ))}
+        {allProductsList && allProductsList.products ? (
+          allProductsList.products.map((product) => (
+            <ProductListingCard key={product.id} product={product} />
+          ))
+        ) : (
+          <p>No products available.</p>
+        )}
       </section>
     </section>
   );

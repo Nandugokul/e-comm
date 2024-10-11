@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductListingPage from "./pages/product-listing/ProductListingPage.jsx";
 import { StrictMode } from "react";
 import CartPage from "./pages/cart/CartPage.jsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.js";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <section className="m-auto max-w-screen-2xl">
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </section>
   </StrictMode>
 );
