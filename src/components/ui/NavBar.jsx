@@ -2,11 +2,19 @@ import { IoCartOutline, IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import logo from "../../../public/Icons-images/SVG/logo.svg";
 import { IoIosClose } from "react-icons/io";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilterAndSearchState } from "../../store/productDataSlice";
 function NavBar() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+
+  const clearSearch = () => {
+    dispatch(setFilterAndSearchState({ search: "" }));
+  };
+  const searchTerm = useSelector(
+    (state) => state.productData.filterState.search
+  );
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    dispatch(setFilterAndSearchState({ search: e.target.value }));
   };
   return (
     <main className="flex items-center justify-between py-4 shadow-sm">
@@ -20,13 +28,13 @@ function NavBar() {
         <input
           className="w-full"
           type="text"
-          name=""
+          name="search"
           value={searchTerm}
           onChange={handleSearch}
           placeholder="Seach for products"
         />
         {searchTerm && (
-          <button className="pe-3" onClick={() => setSearchTerm("")}>
+          <button className="pe-3" onClick={clearSearch}>
             <IoIosClose className="text-slate-500 text-lg" />
           </button>
         )}

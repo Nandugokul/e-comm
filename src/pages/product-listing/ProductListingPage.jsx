@@ -9,6 +9,8 @@ function ProductListingPage() {
   const allProductsList = useSelector((state) => state.productData.productList);
   const allProductsData = useSelector((state) => state.productData.data);
   const dispatch = useDispatch();
+  const allFilterData = useSelector((state) => state.productData.filterState);
+  console.log(allFilterData);
 
   const skip = useRef(0);
 
@@ -21,9 +23,7 @@ function ProductListingPage() {
 
   useEffect(() => {
     dispatch(getProductData(0));
-  }, []);
-
-  console.log("All Products List:", allProductsList);
+  }, [dispatch]);
 
   return (
     <section>

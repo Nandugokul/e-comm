@@ -3,14 +3,13 @@ import { useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
 import { FaCheck } from "react-icons/fa";
 function ProductListingCard({ product }) {
-  const soldOut = useMemo(() => Math.random() < 0.2, []);
+  const soldOut = product.availabilityStatus !== "In Stock";
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
   const [itemNumber, setItemNumber] = useState(0);
   const [itemSelected, setItemSelected] = useState(false);
   const handleItemChange = (add) => {
     add ? setItemNumber((prev) => prev + 1) : setItemNumber((prev) => prev - 1);
   };
-
   const handleSelection = (e) => {
     console.log(product);
     setItemSelected(e.target.checked);

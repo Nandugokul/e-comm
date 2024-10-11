@@ -17,14 +17,14 @@ const productDataSlice = createSlice({
   name: "productData",
   initialState: {
     data: [],
+    filterState: { category: "", rating: "", search: "" },
     productList: [],
     error: null,
     status: "idle",
   },
   reducers: {
-    loadMoreProducts: (state, action) => {
-      console.log(action.payload);
-      state.productList = [...state.productList, ...action.payload];
+    setFilterAndSearchState: (state, action) => {
+      state.filterState = { ...state.filterState, ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -46,6 +46,6 @@ const productDataSlice = createSlice({
   },
 });
 
-// export const { loadMoreProducts } = productDataSlice.actions;
+export const { setFilterAndSearchState } = productDataSlice.actions;
 
 export default productDataSlice.reducer;
