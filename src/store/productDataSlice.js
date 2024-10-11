@@ -21,7 +21,12 @@ const productDataSlice = createSlice({
     error: null,
     status: "idle",
   },
-  reducers: {},
+  reducers: {
+    loadMoreProducts: (state, action) => {
+      console.log(action.payload);
+      state.productList = [...state.productList, ...action.payload];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProductData.pending, (state) => {
@@ -41,5 +46,7 @@ const productDataSlice = createSlice({
       });
   },
 });
+
+export const { loadMoreProducts } = productDataSlice.actions;
 
 export default productDataSlice.reducer;
