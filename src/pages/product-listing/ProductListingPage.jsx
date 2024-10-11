@@ -49,9 +49,13 @@ function ProductListingPage() {
       >
         <section className="grid grid-cols-5 gap-4 mt-5">
           {allProductsList ? (
-            allProductsList.map((product) => (
-              <ProductListingCard key={product.id} product={product} />
-            ))
+            allProductsList
+              .filter(
+                (product) => product.rating >= Number(allFilterData.rating)
+              )
+              .map((product) => (
+                <ProductListingCard key={product.id} product={product} />
+              ))
           ) : (
             <p>No products available.</p>
           )}

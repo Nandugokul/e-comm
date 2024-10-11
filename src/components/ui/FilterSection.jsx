@@ -56,10 +56,8 @@ function FilterSection() {
           <option value="" disabled>
             Select Rating
           </option>
-          <option value="laptops">Laptops</option>
-          <option value="mobile-accessories">Mobile accessories</option>
-          <option value="smartphones">Smartphones</option>
-          <option value="tablets">Tablets</option>
+          <option value="3">3 & Above</option>
+          <option value="4">4 & Above</option>
         </select>
         <button
           disabled={!filterState.category && !filterState.rating}

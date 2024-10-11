@@ -54,5 +54,4 @@ const productDataSlice = createSlice({
 });
 
 export const { setFilterAndSearchState } = productDataSlice.actions;
-
 export default productDataSlice.reducer;
