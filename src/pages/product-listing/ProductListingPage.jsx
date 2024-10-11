@@ -4,7 +4,7 @@ import NavBar from "../../components/ui/NavBar";
 import { useSelector } from "react-redux";
 
 function ProductListingPage() {
-  const allProductsList = useSelector((state) => state.productData.data);
+  const allProductsList = useSelector((state) => state.productData.productList);
 
   console.log("All Products List:", allProductsList);
 
@@ -15,8 +15,8 @@ function ProductListingPage() {
         <FilterSection />
       </header>
       <section className="grid grid-cols-5 gap-4 mt-5">
-        {allProductsList && allProductsList.products ? (
-          allProductsList.products.map((product) => (
+        {allProductsList ? (
+          allProductsList.map((product) => (
             <ProductListingCard key={product.id} product={product} />
           ))
         ) : (

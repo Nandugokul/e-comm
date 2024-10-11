@@ -17,6 +17,7 @@ const productDataSlice = createSlice({
   name: "productData",
   initialState: {
     data: [],
+    productList: [],
     error: null,
     status: "idle",
   },
@@ -30,6 +31,8 @@ const productDataSlice = createSlice({
       .addCase(getProductData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
+        console.log(action.payload);
+        state.productList = [...action.payload.products];
         state.error = null;
       })
       .addCase(getProductData.rejected, (state, action) => {
