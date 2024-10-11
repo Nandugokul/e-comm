@@ -3,9 +3,9 @@ import { getAllProducts } from "../pages/product-listing/api-services/product-li
 
 export const getProductData = createAsyncThunk(
   "productData/getProductData",
-  async (skip, { rejectWithValue }) => {
+  async (skipAndCategory, { rejectWithValue }) => {
     try {
-      const response = await getAllProducts(skip);
+      const response = await getAllProducts(skipAndCategory);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -24,6 +24,13 @@ const productDataSlice = createSlice({
   },
   reducers: {
     setFilterAndSearchState: (state, action) => {
+      if (
+        action.payload.category &&
+        action.payload.category !== state.filterState.category
+      ) {
+        state.productList = [];
+        state.filterState.search = "";
+      }
       state.filterState = { ...state.filterState, ...action.payload };
     },
   },

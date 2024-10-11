@@ -18,12 +18,22 @@ function ProductListingPage() {
     console.log("Load More Products");
     console.log(allProductsData);
     skip.current += 20;
-    dispatch(getProductData(skip.current));
+    dispatch(
+      getProductData({
+        skip: skip.current,
+        category: allFilterData.category,
+      })
+    );
   };
 
   useEffect(() => {
-    dispatch(getProductData(0));
-  }, [dispatch]);
+    dispatch(
+      getProductData({
+        skip: 0,
+        category: allFilterData.category,
+      })
+    );
+  }, [dispatch, allFilterData.category]);
 
   return (
     <section>
