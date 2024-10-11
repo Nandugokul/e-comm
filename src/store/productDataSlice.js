@@ -3,9 +3,9 @@ import { getAllProducts } from "../pages/product-listing/api-services/product-li
 
 export const getProductData = createAsyncThunk(
   "productData/getProductData",
-  async (category, { rejectWithValue }) => {
+  async (skip, { rejectWithValue }) => {
     try {
-      const response = await getAllProducts(category);
+      const response = await getAllProducts(skip);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -36,8 +36,7 @@ const productDataSlice = createSlice({
       .addCase(getProductData.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
-        console.log(action.payload);
-        state.productList = [...action.payload.products];
+        state.productList = [...state.productList, ...action.payload.products];
         state.error = null;
       })
       .addCase(getProductData.rejected, (state, action) => {
@@ -47,6 +46,6 @@ const productDataSlice = createSlice({
   },
 });
 
-export const { loadMoreProducts } = productDataSlice.actions;
+// export const { loadMoreProducts } = productDataSlice.actions;
 
 export default productDataSlice.reducer;

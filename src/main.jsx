@@ -19,11 +19,11 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <section className="m-auto max-w-screen-2xl">
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </section>
-  </StrictMode>
+  // <StrictMode>
+  <section className="m-auto max-w-screen-2xl">
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </section>
+  // </StrictMode>
 );
