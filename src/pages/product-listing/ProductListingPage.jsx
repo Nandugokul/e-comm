@@ -22,18 +22,21 @@ function ProductListingPage() {
       getProductData({
         skip: skip.current,
         category: allFilterData.category,
+        search: allFilterData.search,
       })
     );
   };
 
   useEffect(() => {
+    console.log("All Filter Data");
     dispatch(
       getProductData({
         skip: 0,
         category: allFilterData.category,
+        search: allFilterData.search,
       })
     );
-  }, [dispatch, allFilterData.category]);
+  }, [dispatch, allFilterData.category, allFilterData.search]);
 
   return (
     <section>
@@ -50,9 +53,11 @@ function ProductListingPage() {
         <section className="grid grid-cols-5 gap-4 mt-5">
           {allProductsList ? (
             allProductsList
-              .filter(
-                (product) => product.rating >= Number(allFilterData.rating)
-              )
+              .filter((product) => {
+                const productRating = Math.floor(product.rating);
+                const filterRating = Math.floor(Number(allFilterData.rating));
+                return productRating >= filterRating;
+              })
               .map((product) => (
                 <ProductListingCard key={product.id} product={product} />
               ))

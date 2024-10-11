@@ -56,8 +56,8 @@ function FilterSection() {
           <option value="" disabled>
             Select Rating
           </option>
-          <option value="3">3 & Above</option>
-          <option value="4">4 & Above</option>
+          <option value="3">Above 3</option>
+          <option value="4">Above 4</option>
         </select>
         <button
           disabled={!filterState.category && !filterState.rating}

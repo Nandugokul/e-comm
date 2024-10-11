@@ -24,10 +24,13 @@ const productDataSlice = createSlice({
   },
   reducers: {
     setFilterAndSearchState: (state, action) => {
-      if (
-        action.payload.category &&
-        action.payload.category !== state.filterState.category
-      ) {
+      const { search, category } = action.payload;
+
+      if (search && search !== state.filterState.search) {
+        state.productList = [];
+        state.filterState.category = "";
+      }
+      if (category && category !== state.filterState.category) {
         state.productList = [];
         state.filterState.search = "";
       }

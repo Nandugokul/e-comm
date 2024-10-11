@@ -7,6 +7,12 @@ export const getAllProducts = (skipAndCategory) => {
         skipAndCategory.skip
       }`
     );
+  } else if (skipAndCategory.search) {
+    return axiosClient.get(
+      `search?q=${skipAndCategory.search}&limit=${20}&skip=${
+        skipAndCategory.skip
+      }`
+    );
   } else return axiosClient.get(`?limit=${20}&skip=${skipAndCategory.skip}`);
 };
 
