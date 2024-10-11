@@ -26,7 +26,7 @@ function ProductListingCard({ product }) {
       <div className="flex justify-center items-center mb-2">
         <img
           className="group-hover:scale-105 transition-all duration-150 ease-in-out w-[150px] h-[150px] object-cover"
-          src={product.images[0]}
+          src={product.thumbnail}
           alt={product.title}
           loading="lazy"
         />
