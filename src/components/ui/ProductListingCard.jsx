@@ -2,22 +2,47 @@
 import { useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
 import { FaCheck } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import {
+  changeQuantity,
+  setItemsAndQuantity,
+  removeItem,
+} from "../../store/cartDataSlice";
+
 function ProductListingCard({ product }) {
   const soldOut = product.availabilityStatus !== "In Stock";
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
-  const [itemNumber, setItemNumber] = useState(0);
-  const [itemSelected, setItemSelected] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
+
   const handleItemChange = (add) => {
-    add ? setItemNumber((prev) => prev + 1) : setItemNumber((prev) => prev - 1);
+    if (!add && quantity === 1) {
+      dispatch(removeItem(product.id));
+      setQuantity(0);
+    } else {
+      add ? setQuantity((prev) => prev + 1) : setQuantity((prev) => prev - 1);
+      dispatch(changeQuantity({ method: add, productId: product.id }));
+    }
   };
+
   const handleSelection = (e) => {
-    console.log(product);
-    setItemSelected(e.target.checked);
+    if (e.target.checked) {
+      setQuantity(1);
+      dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
+    } else {
+      dispatch(removeItem(product.id));
+      setQuantity(0);
+    }
   };
 
   const handleNotification = () => {};
   const handleAddToCart = () => {
-    soldOut ? handleNotification() : handleItemChange(true);
+    if (soldOut) {
+      handleNotification();
+    } else {
+      setQuantity(1);
+      dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
+    }
   };
 
   return (
@@ -48,7 +73,7 @@ function ProductListingCard({ product }) {
         <h2 className={`font-semibold flex-1 `}>${product.price}</h2>
         <div
           className={`${
-            !itemNumber ? "hidden" : ""
+            !quantity ? "hidden" : ""
           } grid grid-cols-3 items-center flex-1 justify-between border-borderColor border rounded-md`}
         >
           <button
@@ -57,7 +82,7 @@ function ProductListingCard({ product }) {
           >
             -
           </button>
-          <div className="text-center">{itemNumber}</div>
+          <div className="text-center">{quantity}</div>
           <button
             className="py-2 text-center hover:bg-selectBG"
             onClick={() => handleItemChange(true)}
@@ -67,7 +92,7 @@ function ProductListingCard({ product }) {
         </div>
         <button
           onClick={handleAddToCart}
-          className={`${itemNumber ? "hidden" : ""} ${
+          className={`${quantity ? "hidden" : ""} ${
             !soldOut
               ? "bg-primaryColor text-white"
               : "bg-white text-primaryColor"
@@ -84,11 +109,13 @@ function ProductListingCard({ product }) {
       )}
       <label
         className={`${
-          itemSelected ? "bg-primaryColor grid place-items-center" : "hidden"
-        } absolute group-hover:block top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
+          quantity ? "bg-primaryColor grid place-items-center" : "hidden"
+        } absolute ${
+          soldOut ? "" : "group-hover:block"
+        }  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
         htmlFor={`${"checkbox " + product.id}`}
       >
-        {itemSelected && <FaCheck className="text-white w-3" />}
+        {quantity > 0 && <FaCheck className="text-white w-3" />}
       </label>
 
       <input

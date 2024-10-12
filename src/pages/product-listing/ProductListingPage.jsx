@@ -10,8 +10,9 @@ function ProductListingPage() {
   const allProductsData = useSelector((state) => state.productData.data);
   const dispatch = useDispatch();
   const allFilterData = useSelector((state) => state.productData.filterState);
-  console.log(allFilterData);
-
+  const selectedItems = useSelector(
+    (state) => state.cartData.selectedItemsAndQuantity
+  );
   const skip = useRef(0);
 
   const LoadMoreProducts = async () => {
@@ -38,6 +39,7 @@ function ProductListingPage() {
     );
   }, [dispatch, allFilterData.category, allFilterData.search]);
 
+  console.log(selectedItems);
   return (
     <section>
       <header className="sticky top-0 bg-white z-50">
