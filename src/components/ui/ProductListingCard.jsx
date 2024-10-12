@@ -49,11 +49,9 @@ function ProductListingCard({ product }) {
   //   }
   // };
 
-  const handleNotification = () => {};
   const handleAddToCart = () => {
     if (soldOut) {
       toast.success("You will be notified on stock availability");
-      handleNotification();
     } else {
       toast.success("Product Added to Cart");
       setQuantity(1);

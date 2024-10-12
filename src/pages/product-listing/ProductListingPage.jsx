@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { clearProductData, getProductData } from "../../store/productDataSlice";
 import loader from "../../../public/Icons-images/gif/loader2.svg";
 import toast from "react-hot-toast";
+import ProductListingRow from "../../components/ui/ProductListingRow";
 function ProductListingPage() {
   const allProductsList = useSelector((state) => state.productData.productList);
   const allProductsData = useSelector((state) => state.productData.data);
@@ -14,7 +15,7 @@ function ProductListingPage() {
   const allFilterData = useSelector((state) => state.productData.filterState);
   const skip = useRef(0);
   const loadingProducts = useSelector((state) => state.productData.status);
-
+  const layout = useSelector((state) => state.layoutData.layout);
   const LoadMoreProducts = async () => {
     skip.current += 30;
     dispatch(
@@ -26,6 +27,7 @@ function ProductListingPage() {
     );
   };
 
+  console.log(layout);
   useEffect(() => {
     if (loadingProducts === "failed") {
       toast.error("Something went wrong");
@@ -68,24 +70,49 @@ function ProductListingPage() {
             </div>
           }
         >
-          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-5">
-            {allProductsList.length > 0 ? (
-              allProductsList
-                .filter((product) => {
-                  const productRating = Math.floor(product.rating);
-                  const filterRating = Math.floor(Number(allFilterData.rating));
-                  return productRating >= filterRating;
-                })
-                .map((product) => (
-                  <ProductListingCard key={product.id} product={product} />
-                ))
-            ) : (
-              <div className="col-span-full flex items-center justify-center h-[70vh] w-full">
-                <p>No products available.</p>
-                <span>Try searching for other keywords</span>
-              </div>
-            )}
-          </section>
+          {layout === "grid" ? (
+            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-5">
+              {allProductsList.length > 0 ? (
+                allProductsList
+                  .filter((product) => {
+                    const productRating = Math.floor(product.rating);
+                    const filterRating = Math.floor(
+                      Number(allFilterData.rating)
+                    );
+                    return productRating >= filterRating;
+                  })
+                  .map((product) => (
+                    <ProductListingCard key={product.id} product={product} />
+                  ))
+              ) : (
+                <div className="col-span-full flex items-center justify-center h-[70vh] w-full">
+                  <p>No products available.</p>
+                  <span>Try searching for other keywords</span>
+                </div>
+              )}
+            </section>
+          ) : (
+            <section>
+              {allProductsList.length > 0 ? (
+                allProductsList
+                  .filter((product) => {
+                    const productRating = Math.floor(product.rating);
+                    const filterRating = Math.floor(
+                      Number(allFilterData.rating)
+                    );
+                    return productRating >= filterRating;
+                  })
+                  .map((product) => (
+                    <ProductListingRow key={product.id} product={product} />
+                  ))
+              ) : (
+                <div className="col-span-full flex items-center justify-center h-[70vh] w-full">
+                  <p>No products available.</p>
+                  <span>Try searching for other keywords</span>
+                </div>
+              )}
+            </section>
+          )}
         </InfiniteScroll>
       )}
     </section>

@@ -7,6 +7,7 @@ import {
   clearProductData,
   setFilterAndSearchState,
 } from "../../store/productDataSlice";
+import { setLayoutState } from "../../store/layoutSlice";
 
 function FilterSection() {
   const [categoryList, setCategoryList] = useState([]);
@@ -30,13 +31,15 @@ function FilterSection() {
     const savedLayout = localStorage.getItem("layout");
     if (savedLayout) {
       setLayout(savedLayout);
+      dispatch(setLayoutState(savedLayout));
     }
-  }, []);
+  }, [dispatch]);
 
   const handleLayoutChange = () => {
     const newLayout = layout === "grid" ? "list" : "grid";
     setLayout(newLayout);
     localStorage.setItem("layout", newLayout);
+    dispatch(setLayoutState(newLayout));
   };
 
   const handleReset = () => {
