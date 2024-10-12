@@ -1,23 +1,62 @@
+import { useState, useCallback, useRef, useEffect } from "react";
 import { IoCartOutline, IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import logo from "../../../public/Icons-images/SVG/logo.svg";
 import { IoIosClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterAndSearchState } from "../../store/productDataSlice";
+import {
+  clearProductData,
+  setFilterAndSearchState,
+} from "../../store/productDataSlice";
+
 function NavBar() {
   const dispatch = useDispatch();
+
+  const categoryFilter = useSelector(
+    (state) => state.productData.filterState.category
+  );
+
   const selectedItems = useSelector(
     (state) => state.cartData.selectedItemsAndQuantity
   );
-  const clearSearch = () => {
-    dispatch(setFilterAndSearchState({ search: "" }));
-  };
+
   const searchTerm = useSelector(
     (state) => state.productData.filterState.search
   );
-  const handleSearch = (e) => {
-    dispatch(setFilterAndSearchState({ search: e.target.value }));
+
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+  const debounceTimerRef = useRef(null);
+
+  useEffect(() => {
+    if (categoryFilter) {
+      setLocalSearchTerm("");
+    }
+  }, [categoryFilter]);
+
+  const clearSearch = () => {
+    setLocalSearchTerm("");
+    dispatch(setFilterAndSearchState({ search: "" }));
   };
+
+  const debouncedSearch = useCallback(
+    (value) => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      debounceTimerRef.current = setTimeout(() => {
+        dispatch(clearProductData());
+        dispatch(setFilterAndSearchState({ search: value }));
+      }, 300);
+    },
+    [dispatch]
+  );
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setLocalSearchTerm(value);
+    debouncedSearch(value);
+  };
+
   return (
     <main className="flex items-center justify-between py-4 shadow-sm">
       <Link className="cursor-pointer" to={"/"}>
@@ -31,11 +70,11 @@ function NavBar() {
           className="w-full"
           type="text"
           name="search"
-          value={searchTerm}
+          value={localSearchTerm}
           onChange={handleSearch}
-          placeholder="Seach for products"
+          placeholder="Search for products"
         />
-        {searchTerm && (
+        {localSearchTerm && (
           <button className="pe-3" onClick={clearSearch}>
             <IoIosClose className="text-slate-500 text-lg" />
           </button>
@@ -51,4 +90,5 @@ function NavBar() {
     </main>
   );
 }
+
 export default NavBar;

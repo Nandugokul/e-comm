@@ -3,7 +3,10 @@ import { MdOutlineReplay } from "react-icons/md";
 // import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
 import { getCategories } from "../../pages/product-listing/api-services/product-listing";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterAndSearchState } from "../../store/productDataSlice";
+import {
+  clearProductData,
+  setFilterAndSearchState,
+} from "../../store/productDataSlice";
 
 function FilterSection() {
   const [categoryList, setCategoryList] = useState([]);
@@ -21,6 +24,7 @@ function FilterSection() {
   };
 
   const handleReset = () => {
+    dispatch(clearProductData());
     dispatch(setFilterAndSearchState({ category: "", rating: "" }));
   };
 
