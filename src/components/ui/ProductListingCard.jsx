@@ -9,6 +9,7 @@ import {
   removeItem,
   setItemQuantity,
 } from "../../store/cartDataSlice";
+import toast from "react-hot-toast";
 
 function ProductListingCard({ product }) {
   const soldOut = product.availabilityStatus !== "In Stock";
@@ -38,6 +39,8 @@ function ProductListingCard({ product }) {
   }, [dispatch, product.id, itemQuantity]);
 
   const handleSelection = (e) => {
+    toast.success("Product Added to Cart");
+
     if (e.target.checked) {
       setQuantity(1);
       dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
@@ -49,6 +52,8 @@ function ProductListingCard({ product }) {
 
   const handleNotification = () => {};
   const handleAddToCart = () => {
+    toast.success("Product Added to Cart");
+
     if (soldOut) {
       handleNotification();
     } else {

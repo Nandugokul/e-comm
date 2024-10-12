@@ -9,6 +9,7 @@ import {
   setTotalPayable,
 } from "../../../store/cartDataSlice";
 import { IoIosClose } from "react-icons/io";
+import toast from "react-hot-toast";
 
 function CartProductListingCard({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
@@ -23,6 +24,7 @@ function CartProductListingCard({ product }) {
 
   const handleProudctRemove = () => {
     dispatch(removeItem(product.id));
+    toast.success("Product Removed from Cart");
   };
 
   useEffect(() => {
