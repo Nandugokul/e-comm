@@ -16,7 +16,7 @@ function ProductListingPage() {
   const loadingProducts = useSelector((state) => state.productData.status);
 
   const LoadMoreProducts = async () => {
-    skip.current += 20;
+    skip.current += 30;
     dispatch(
       getProductData({
         skip: skip.current,
