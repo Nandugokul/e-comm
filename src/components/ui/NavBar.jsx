@@ -60,10 +60,10 @@ function NavBar() {
   return (
     <main className="flex items-center justify-between py-4 shadow-sm">
       <Link className="cursor-pointer" to={"/"}>
-        <img src={logo} alt="logo" className="w-32" />
+        <img src={logo} alt="logo" className="w-[5.5rem] sm:w-32" />
       </Link>
       {url === "/" && (
-        <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/3">
+        <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/2 md:w-1/3">
           <div className="h-full">
             <IoSearch className="text-slate-500 text-lg" />
           </div>
@@ -87,7 +87,7 @@ function NavBar() {
         data-count={selectedItems.length}
         className=" text-white flex items-center space-x-2 cart"
       >
-        <IoCartOutline className="text-[28px] text-black" />
+        <IoCartOutline className="text-[24px] sm:text-[28px] text-black" />
       </Link>
     </main>
   );
