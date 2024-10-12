@@ -52,7 +52,12 @@ select:focus {
   font-weight: bold;
 }
 
-/* Hide the badge when data-count is 0 */
 .cart[data-count="0"]::after {
   display: none;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 0 1rem;
+  }
 }

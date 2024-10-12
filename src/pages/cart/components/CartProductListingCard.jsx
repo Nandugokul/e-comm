@@ -45,7 +45,7 @@ function CartProductListingCard({ product }) {
 
   return (
     <tr className="border-b border-borderColor">
-      <td className="flex space-x-4 items-center py-4">
+      <td className="md:flex md:space-x-4 items-center py-4">
         <img
           className="group-hover:scale-105 transition-all duration-150 ease-in-out w-[72px] h-[72px] object-cover"
           src={product.thumbnail}
@@ -53,18 +53,20 @@ function CartProductListingCard({ product }) {
           loading="lazy"
         />
         <div className="space-y-1">
-          <h6>{product.title}</h6>
-          <div className="flex space-x-2 items-center">
+          <h6 className="mt-2 md:mt-0">{product.title}</h6>
+          <div className="hidden  md:flex space-x-2 items-center">
             <div className="flex space-x-1 items-center bg-selectBG px-1 rounded-[4px] ">
               <img src={starIcon} className="w-3" alt="stars" />
               <small>{product.rating.toFixed(1)}</small>
             </div>
-            <small className="text-gray-500">{reviewCount} reviews</small>
+            <small className="text-gray-500 hidden lg:block">
+              {reviewCount} reviews
+            </small>
           </div>
           <h2 className={`font-semibold flex-1 `}>${product.price}</h2>
         </div>
       </td>
-      <td className="w-[150px]">
+      <td className="w-[70px] md:w-[150px]">
         <div
           className={`max-w-[100px] grid grid-cols-3 items-center flex-1 justify-between border-borderColor border rounded-md`}
         >
@@ -90,7 +92,7 @@ function CartProductListingCard({ product }) {
       </td>
       <td>
         <button
-          className="ms-6 flex items-center"
+          className="ms-2 md:ms-6 flex items-center"
           onClick={handleProudctRemove}
         >
           <IoIosClose className="text-slate-500 text-lg" />

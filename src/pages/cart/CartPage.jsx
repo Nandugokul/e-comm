@@ -21,8 +21,8 @@ function CartPage() {
       <header className="sticky top-0 bg-white z-50">
         <NavBar />
       </header>
-      <div className="flex mt-5">
-        <div className="w-2/3 pe-[40px]">
+      <div className="md:flex mt-5">
+        <div className="md:w-2/3 md:pe-[40px]">
           <h3 className="font-semibold text-[20px]">Products in Cart</h3>
           <div className="flex ps-2 ">
             <table className="w-full mt-4 ">
