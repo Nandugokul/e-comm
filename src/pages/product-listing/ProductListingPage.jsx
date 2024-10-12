@@ -16,8 +16,6 @@ function ProductListingPage() {
   const skip = useRef(0);
 
   const LoadMoreProducts = async () => {
-    console.log("Load More Products");
-    console.log(allProductsData);
     skip.current += 20;
     dispatch(
       getProductData({
@@ -29,7 +27,6 @@ function ProductListingPage() {
   };
 
   useEffect(() => {
-    console.log("All Filter Data");
     dispatch(
       getProductData({
         skip: 0,
@@ -38,12 +35,10 @@ function ProductListingPage() {
       })
     );
     return () => {
-      console.log("Component unmounting, clearing product data");
       dispatch(clearProductData());
     };
   }, [dispatch, allFilterData.category, allFilterData.search]);
 
-  console.log(selectedItems);
   return (
     <section>
       <header className="sticky top-0 bg-white z-50">

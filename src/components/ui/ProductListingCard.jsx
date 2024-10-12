@@ -21,7 +21,7 @@ function ProductListingCard({ product }) {
     dispatch(setItemQuantity({ [product.id]: quantity }));
   };
 
-  const handleItemChange = (add) => {
+  const handleQuantityChange = (add) => {
     if (!add && quantity === 1) {
       dispatch(removeItem(product.id));
       setQuantity(0);
@@ -90,14 +90,14 @@ function ProductListingCard({ product }) {
         >
           <button
             className="py-2 text-center hover:bg-selectBG"
-            onClick={() => handleItemChange(false)}
+            onClick={() => handleQuantityChange(false)}
           >
             -
           </button>
           <div className="text-center">{quantity}</div>
           <button
             className="py-2 text-center hover:bg-selectBG"
-            onClick={() => handleItemChange(true)}
+            onClick={() => handleQuantityChange(true)}
           >
             +
           </button>

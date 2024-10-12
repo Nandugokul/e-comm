@@ -1,11 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../../components/ui/NavBar";
 import CartProductListingCard from "./components/CartProductListingCard";
+import { useEffect } from "react";
+import { setTotalPayable } from "../../store/cartDataSlice";
 
 function CartPage() {
   const selectedItems = useSelector(
     (state) => state.cartData.selectedItemsAndQuantity
   );
+  const dispatch = useDispatch();
+  const totalPayable = useSelector((state) => state.cartData.totalPayable);
+
+  useEffect(() => {
+    dispatch(setTotalPayable());
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -49,7 +58,9 @@ function CartPage() {
           </div>
           <div className=" pb-1 mt-4 flex justify-between items-center">
             <span className="font-[600]">Total Payable</span>
-            <span className="font-bold text-[20px]">$200</span>
+            <span className="font-bold text-[20px]">
+              ${totalPayable.toFixed(2)}
+            </span>
           </div>
           <button className="bg-primaryColor py-2 px-4 rounded-md text-my14 font-semibold text-white w-full mt-4">
             Proceed to checkout
