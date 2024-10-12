@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFilterAndSearchState } from "../../store/productDataSlice";
 function NavBar() {
   const dispatch = useDispatch();
-
+  const selectedItems = useSelector(
+    (state) => state.cartData.selectedItemsAndQuantity
+  );
   const clearSearch = () => {
     dispatch(setFilterAndSearchState({ search: "" }));
   };
@@ -18,7 +20,7 @@ function NavBar() {
   };
   return (
     <main className="flex items-center justify-between py-4 shadow-sm">
-      <Link to={"/"}>
+      <Link className="cursor-pointer" to={"/"}>
         <img src={logo} alt="logo" className="w-32" />
       </Link>
       <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/3">
@@ -41,7 +43,7 @@ function NavBar() {
       </div>
       <Link
         to="/cart"
-        data-count={10}
+        data-count={selectedItems.length}
         className=" text-white flex items-center space-x-2 cart"
       >
         <IoCartOutline className="text-[28px] text-black" />

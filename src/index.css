@@ -51,3 +51,8 @@ select:focus {
   font-size: 10px;
   font-weight: bold;
 }
+
+/* Hide the badge when data-count is 0 */
+.cart[data-count="0"]::after {
+  display: none;
+}
