@@ -1,45 +1,68 @@
 /* eslint-disable react/prop-types */
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeQuantity,
-  removeItem,
-  setItemQuantity,
-  setItemsAndQuantity,
-} from "../../store/cartDataSlice";
-import toast from "react-hot-toast";
 import { FaCheck } from "react-icons/fa";
+import {
+  addToTempProductList,
+  removeFromTempProductList,
+  setTempListFromCart,
+  setTempListQuantity,
+} from "../../store/productDataSlice";
+import toast from "react-hot-toast";
 function ProductListingRow({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
-  const itemQuantity = useSelector((state) => state.cartData.productQuantity);
-  const quantity = itemQuantity[product.id] || 0;
+  const quantity = useSelector(
+    (state) => state.productData.tempProductListQuantity[product.id] || 0
+  );
+  const cartItems = useSelector(
+    (state) => state.cartData.selectedItemsAndQuantity
+  );
   const dispatch = useDispatch();
+  const cartItemQuantity = useSelector(
+    (state) => state.cartData.productQuantity
+  );
   const soldOut = product.availabilityStatus !== "In Stock";
 
-  const setQuantity = (quantity) => {
-    dispatch(setItemQuantity({ [product.id]: quantity }));
-  };
-  const handleQuantityChange = (add) => {
-    if (!add && quantity === 1) {
-      dispatch(removeItem(product.id));
-      setQuantity(0);
+  useEffect(() => {
+    dispatch(
+      setTempListFromCart({ quantity: cartItemQuantity, product: cartItems })
+    );
+  }, []);
+
+  const handleSelectionChange = (event) => {
+    if (event.target.checked) {
+      dispatch(addToTempProductList(product));
+      dispatch(
+        setTempListQuantity({
+          id: product.id,
+          quantity: 1,
+          product: product,
+        })
+      );
     } else {
-      add ? setQuantity(quantity + 1) : setQuantity(quantity - 1);
-      dispatch(changeQuantity({ method: add, productId: product.id }));
+      dispatch(removeFromTempProductList(product.id));
+      dispatch(
+        setTempListQuantity({
+          id: product.id,
+          quantity: 0,
+          product: product,
+        })
+      );
     }
   };
 
-  const handleSelection = (e) => {
-    if (e.target.checked) {
-      toast.success("Product Added to Cart");
-      setQuantity(1);
-      dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
-    } else {
-      dispatch(removeItem(product.id));
-      setQuantity(0);
-    }
+  const handleQuantityChange = (add) => {
+    const newQuantity = add ? quantity + 1 : quantity > 0 ? quantity - 1 : 0;
+
+    dispatch(
+      setTempListQuantity({
+        id: product.id,
+        quantity: newQuantity,
+        product: product,
+      })
+    );
   };
 
   return (
@@ -63,38 +86,60 @@ function ProductListingRow({ product }) {
         <small className="text-gray-500">{reviewCount} reviews</small>
       </div>
       <h2 className={`font-semibold`}>${product.price}</h2>
-      <div
-        className={` grid grid-cols-3 items-center w-fullljustify-between border-borderColor border rounded-md`}
-      >
+      {soldOut ? (
         <button
-          className="py-2 text-center hover:bg-selectBG disabled:bg-gray-200"
-          onClick={() => handleQuantityChange(false)}
+          onClick={() => {
+            toast.success("You will be notified on stock availability");
+          }}
+          className="border-primaryColor border font-semibold text-primaryColor  py-2 px-4 rounded-md"
         >
-          -
+          Notify
         </button>
-        <div className="text-center">{quantity}</div>
-        <button
-          className="py-2 text-center hover:bg-selectBG"
-          onClick={() => handleQuantityChange(true)}
+      ) : (
+        <div
+          className={` grid grid-cols-3 items-center w-fullljustify-between border-borderColor border rounded-md`}
         >
-          +
-        </button>
-      </div>
-      <div className="flex items-center justify-end">
-        <label
-          className={`ms-4 grid  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
-          htmlFor={`${"checkbox " + product.id}`}
-        >
-          {<FaCheck className="text-white w-3" />}
-        </label>
+          <button
+            disabled={quantity === 0}
+            className="py-2 text-center hover:bg-selectBG "
+            onClick={() => handleQuantityChange(false)}
+          >
+            -
+          </button>
+          <div className="text-center">{quantity}</div>
+          <button
+            className="py-2 text-center hover:bg-selectBG"
+            onClick={() => handleQuantityChange(true)}
+          >
+            +
+          </button>
+        </div>
+      )}
+      {soldOut ? (
+        <div className="flex items-center justify-end">
+          <small className=" w-fit rounded-md px-4 py-1 bg-selectBG text-[12px]">
+            Sold Out
+          </small>
+        </div>
+      ) : (
+        <div className="flex items-center justify-end">
+          <label
+            className={`${
+              quantity ? "bg-primaryColor" : ""
+            } ms-4 grid  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
+            htmlFor={`${"checkbox " + product.id}`}
+          >
+            {quantity ? <FaCheck className="text-white w-3" /> : null}
+          </label>
 
-        <input
-          onChange={handleSelection}
-          id={`${"checkbox " + product.id}`}
-          type="checkbox"
-          className="hidden"
-        />
-      </div>
+          <input
+            onChange={handleSelectionChange}
+            id={`${"checkbox " + product.id}`}
+            type="checkbox"
+            className="hidden"
+          />
+        </div>
+      )}
     </section>
   );
 }

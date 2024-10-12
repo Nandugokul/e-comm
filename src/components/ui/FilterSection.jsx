@@ -8,11 +8,28 @@ import {
   setFilterAndSearchState,
 } from "../../store/productDataSlice";
 import { setLayoutState } from "../../store/layoutSlice";
+import { setCartItems } from "../../store/cartDataSlice";
+import toast from "react-hot-toast";
 
 function FilterSection() {
   const [categoryList, setCategoryList] = useState([]);
   const filterState = useSelector((state) => state.productData.filterState);
   const dispatch = useDispatch();
+  const tempProductList = useSelector(
+    (state) => state.productData.tempProductList
+  );
+  const tempProductQuantity = useSelector(
+    (state) => state.productData.tempProductListQuantity
+  );
+  const handleAddToCart = () => {
+    dispatch(
+      setCartItems({
+        productList: tempProductList,
+        quantity: tempProductQuantity,
+      })
+    );
+    toast.success(`${tempProductList.length} items added to cart`);
+  };
 
   const [layout, setLayout] = useState("grid");
 
@@ -63,8 +80,8 @@ function FilterSection() {
           <option value="" disabled>
             Select a category
           </option>
-          {categoryList.map((category) => (
-            <option key={category} value={category}>
+          {categoryList.map((category, index) => (
+            <option key={category + index} value={category}>
               {category}
             </option>
           ))}
@@ -93,25 +110,44 @@ function FilterSection() {
           <span>Reset</span>
         </button>
       </div>
-      <div className="flex space-x-3 items-center mb-4">
-        <button
-          className={` rounded-md p-2 text-[#9e9f9f] ${
-            layout === "grid" ? "bg-selectBG text-black" : null
-          }`}
-          onClick={() => handleLayoutChange("grid")}
-        >
-          <TbLayoutGrid className="text-xl" />
-        </button>
-        <button
-          className={`rounded-md p-2 text-[#9e9f9f] ${
-            layout === "list"
-              ? "bg-selectBG text-text-[#9e9f9f] text-black"
-              : null
-          }`}
-          onClick={() => handleLayoutChange("list")}
-        >
-          <TbLayoutList className="text-xl" />
-        </button>
+      <div className="flex items-center space-x-6">
+        {tempProductList.length && layout === "list" ? (
+          <div className="flex items-center space-x-2">
+            <span className="text-lg font-semibold">
+              {tempProductList.length}
+            </span>
+            <span>products selected</span>
+            <span>
+              <button
+                onClick={handleAddToCart}
+                className="ml-1 font-semibold underline underline-offset-2"
+              >
+                Add To Cart
+              </button>
+            </span>
+          </div>
+        ) : null}
+
+        <div className="flex space-x-3 ">
+          <button
+            className={` rounded-md p-2 text-[#9e9f9f] ${
+              layout === "grid" ? "bg-selectBG text-black" : null
+            }`}
+            onClick={() => handleLayoutChange("grid")}
+          >
+            <TbLayoutGrid className="text-xl" />
+          </button>
+          <button
+            className={`rounded-md p-2 text-[#9e9f9f] ${
+              layout === "list"
+                ? "bg-selectBG text-text-[#9e9f9f] text-black"
+                : null
+            }`}
+            onClick={() => handleLayoutChange("list")}
+          >
+            <TbLayoutList className="text-xl" />
+          </button>
+        </div>
       </div>
     </section>
   );

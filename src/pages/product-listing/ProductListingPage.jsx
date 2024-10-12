@@ -16,6 +16,7 @@ function ProductListingPage() {
   const skip = useRef(0);
   const loadingProducts = useSelector((state) => state.productData.status);
   const layout = useSelector((state) => state.layoutData.layout);
+
   const LoadMoreProducts = async () => {
     skip.current += 30;
     dispatch(
@@ -27,7 +28,6 @@ function ProductListingPage() {
     );
   };
 
-  console.log(layout);
   useEffect(() => {
     if (loadingProducts === "failed") {
       toast.error("Something went wrong");

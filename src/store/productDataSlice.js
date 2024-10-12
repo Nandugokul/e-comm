@@ -17,6 +17,8 @@ const productDataSlice = createSlice({
   name: "productData",
   initialState: {
     data: [],
+    tempProductList: [],
+    tempProductListQuantity: {},
     filterState: { category: "", rating: "", search: "" },
     productList: [],
     error: null,
@@ -35,6 +37,41 @@ const productDataSlice = createSlice({
     },
     clearProductData(state) {
       state.productList = [];
+    },
+    addToTempProductList: (state, action) => {
+      state.tempProductList = [
+        ...state.tempProductList,
+        { ...action.payload, quantity: 1 },
+      ];
+    },
+    removeFromTempProductList: (state, action) => {
+      state.tempProductList = state.tempProductList.filter(
+        (item) => item.id !== action.payload
+      );
+    },
+
+    setTempListQuantity: (state, action) => {
+      const { id, quantity, product } = action.payload;
+      if (quantity === 0) {
+        state.tempProductList = state.tempProductList.filter(
+          (item) => item.id !== id
+        );
+        delete state.tempProductListQuantity[id];
+        return;
+      }
+      const index = state.tempProductList.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        state.tempProductList[index].quantity = quantity;
+      } else {
+        state.tempProductList.push({ ...product, id, quantity });
+      }
+      state.tempProductListQuantity[id] = quantity;
+    },
+
+    setTempListFromCart: (state, action) => {
+      const { product, quantity } = action.payload;
+      state.tempProductListQuantity = quantity;
+      state.tempProductList = product;
     },
   },
   extraReducers: (builder) => {
@@ -58,6 +95,12 @@ const productDataSlice = createSlice({
   },
 });
 
-export const { setFilterAndSearchState, clearProductData } =
-  productDataSlice.actions;
+export const {
+  setFilterAndSearchState,
+  clearProductData,
+  addToTempProductList,
+  removeFromTempProductList,
+  setTempListQuantity,
+  setTempListFromCart,
+} = productDataSlice.actions;
 export default productDataSlice.reducer;

@@ -61,6 +61,11 @@ const cartDataSlice = createSlice({
       );
       delete state.productQuantity[productId];
     },
+    setCartItems: (state, action) => {
+      const { productList, quantity } = action.payload;
+      state.selectedItemsAndQuantity = productList;
+      state.productQuantity = quantity;
+    },
   },
 });
 
@@ -71,5 +76,6 @@ export const {
   setItemQuantity,
   setTotalPayable,
   clearCartItems,
+  setCartItems,
 } = cartDataSlice.actions;
 export default cartDataSlice.reducer;

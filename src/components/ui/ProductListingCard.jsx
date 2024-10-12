@@ -38,17 +38,6 @@ function ProductListingCard({ product }) {
     }
   }, [dispatch, product.id, itemQuantity]);
 
-  // const handleSelection = (e) => {
-  //   if (e.target.checked) {
-  //     toast.success("Product Added to Cart");
-  //     setQuantity(1);
-  //     dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
-  //   } else {
-  //     dispatch(removeItem(product.id));
-  //     setQuantity(0);
-  //   }
-  // };
-
   const handleAddToCart = () => {
     if (soldOut) {
       toast.success("You will be notified on stock availability");
@@ -121,23 +110,6 @@ function ProductListingCard({ product }) {
           Sold Out
         </small>
       )}
-      {/* <label
-        className={`${
-          quantity ? "bg-primaryColor grid place-items-center" : "hidden"
-        } absolute ${
-          soldOut ? "" : "group-hover:block"
-        }  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
-        htmlFor={`${"checkbox " + product.id}`}
-      >
-        {quantity > 0 && <FaCheck className="text-white w-3" />}
-      </label>
-
-      <input
-        onChange={handleSelection}
-        id={`${"checkbox " + product.id}`}
-        type="checkbox"
-        className="hidden"
-      /> */}
     </main>
   );
 }
