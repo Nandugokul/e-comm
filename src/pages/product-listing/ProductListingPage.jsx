@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useRef } from "react";
 import { clearProductData, getProductData } from "../../store/productDataSlice";
 import loader from "../../../public/Icons-images/gif/loader2.svg";
+import toast from "react-hot-toast";
 function ProductListingPage() {
   const allProductsList = useSelector((state) => state.productData.productList);
   const allProductsData = useSelector((state) => state.productData.data);
@@ -26,6 +27,9 @@ function ProductListingPage() {
   };
 
   useEffect(() => {
+    if (loadingProducts === "failed") {
+      toast.error("Something went wrong");
+    }
     dispatch(
       getProductData({
         skip: 0,
