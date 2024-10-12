@@ -2,19 +2,25 @@ import { useDispatch, useSelector } from "react-redux";
 import NavBar from "../../components/ui/NavBar";
 import CartProductListingCard from "./components/CartProductListingCard";
 import { useEffect } from "react";
-import { setTotalPayable } from "../../store/cartDataSlice";
-import { Link } from "react-router-dom";
+import { clearCartItems, setTotalPayable } from "../../store/cartDataSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 function CartPage() {
   const selectedItems = useSelector(
     (state) => state.cartData.selectedItemsAndQuantity
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const totalPayable = useSelector((state) => state.cartData.totalPayable);
 
   useEffect(() => {
     dispatch(setTotalPayable());
   }, [dispatch, selectedItems.length]);
+
+  const handleCheckout = () => {
+    dispatch(clearCartItems());
+    navigate("/thank-you");
+  };
 
   return (
     <>
@@ -71,8 +77,9 @@ function CartPage() {
               ${totalPayable.toFixed(2)}
             </span>
           </div>
-          <Link
-            to={selectedItems.length > 0 ? "/thank-you" : "#"}
+          <button
+            onClick={handleCheckout}
+            disabled={selectedItems.length === 0}
             className={`py-2 px-4 flex w-full items-center justify-center rounded-md text-my14 font-semibold text-white mt-4 ${
               selectedItems.length > 0
                 ? "bg-primaryColor"
@@ -80,7 +87,7 @@ function CartPage() {
             }`}
           >
             Proceed to checkout
-          </Link>
+          </button>
 
           <div className="flex w-full items-center justify-center">
             <Link to="/" className="text-my14 font-semibold mt-4">

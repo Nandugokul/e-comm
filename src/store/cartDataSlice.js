@@ -48,6 +48,12 @@ const cartDataSlice = createSlice({
       );
     },
 
+    clearCartItems: (state) => {
+      state.selectedItemsAndQuantity = [];
+      state.productQuantity = {};
+      state.totalPayable = 0;
+    },
+
     removeItem: (state, action) => {
       const productId = action.payload;
       state.selectedItemsAndQuantity = state.selectedItemsAndQuantity.filter(
@@ -64,5 +70,6 @@ export const {
   removeItem,
   setItemQuantity,
   setTotalPayable,
+  clearCartItems,
 } = cartDataSlice.actions;
 export default cartDataSlice.reducer;
