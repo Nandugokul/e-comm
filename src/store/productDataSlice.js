@@ -44,8 +44,10 @@ const productDataSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProductData.pending, (state) => {
-        state.status = "loading";
         state.error = null;
+        if (state.productList.length === 0) {
+          state.status = "loading";
+        }
       })
       .addCase(getProductData.fulfilled, (state, action) => {
         state.status = "succeeded";

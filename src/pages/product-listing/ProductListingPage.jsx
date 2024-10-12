@@ -53,7 +53,11 @@ function ProductListingPage() {
           dataLength={allProductsList.length}
           next={LoadMoreProducts}
           hasMore={allProductsData.total > allProductsList.length}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <div className="w-full flex items-center justify-center">
+              <img className="w-8" src={loader}></img>
+            </div>
+          }
         >
           <section className="grid grid-cols-5 gap-4 mt-5">
             {allProductsList ? (
