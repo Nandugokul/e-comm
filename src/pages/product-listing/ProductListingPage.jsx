@@ -64,7 +64,7 @@ function ProductListingPage() {
           }
         >
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-5">
-            {allProductsList ? (
+            {allProductsList.length > 0 ? (
               allProductsList
                 .filter((product) => {
                   const productRating = Math.floor(product.rating);
@@ -75,7 +75,10 @@ function ProductListingPage() {
                   <ProductListingCard key={product.id} product={product} />
                 ))
             ) : (
-              <p>No products available.</p>
+              <div className="col-span-full flex items-center justify-center h-[70vh] w-full">
+                <p>No products available.</p>
+                <span>Try searching for other keywords</span>
+              </div>
             )}
           </section>
         </InfiniteScroll>

@@ -12,6 +12,18 @@ export default {
       fontSize: {
         my14: "14px",
       },
+      keyframes: {
+        swap: {
+          "0%": { opacity: "0", transform: "translateY(100%)" },
+          "5%": { opacity: "1", transform: "translateY(0)" },
+          "33%": { opacity: "1" },
+          "38%": { opacity: "0", transform: "translateY(-100%)" },
+          "100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        swap: "swap 8s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
