@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useMemo, useState } from "react";
-import starIcon from "/Icons-images/SVG/whiteStar.svg";
+import starIcon from "../../../../public/Icons-images/SVG/star.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeQuantity,
@@ -53,7 +53,7 @@ function CartProductListingCard({ product }) {
         <div className="space-y-1">
           <h6>{product.title}</h6>
           <div className="flex space-x-2 items-center">
-            <div className="flex space-x-1 items-center bg-green-700 px-1 rounded-[4px] text-white">
+            <div className="flex space-x-1 items-center bg-selectBG px-1 rounded-[4px] ">
               <img src={starIcon} className="w-3" alt="stars" />
               <small>{product.rating.toFixed(1)}</small>
             </div>
@@ -84,10 +84,15 @@ function CartProductListingCard({ product }) {
       <td className="font-semibold text-end">
         <div className="flex items-center justify-end space-x-4">
           <div>${subTotal}</div>
-          <button onClick={handleProudctRemove}>
-            <IoIosClose className="text-slate-500 text-lg" />
-          </button>
         </div>
+      </td>
+      <td>
+        <button
+          className="ms-6 flex items-center"
+          onClick={handleProudctRemove}
+        >
+          <IoIosClose className="text-slate-500 text-lg" />
+        </button>
       </td>
     </tr>
   );

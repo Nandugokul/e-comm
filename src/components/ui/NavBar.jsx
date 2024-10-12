@@ -11,7 +11,7 @@ import {
 
 function NavBar() {
   const dispatch = useDispatch();
-
+  const url = window.location.pathname;
   const categoryFilter = useSelector(
     (state) => state.productData.filterState.category
   );
@@ -62,24 +62,26 @@ function NavBar() {
       <Link className="cursor-pointer" to={"/"}>
         <img src={logo} alt="logo" className="w-32" />
       </Link>
-      <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/3">
-        <div className="h-full">
-          <IoSearch className="text-slate-500 text-lg" />
+      {url === "/" && (
+        <div className="flex items-center bg-selectBG rounded-md ps-3 w-1/3">
+          <div className="h-full">
+            <IoSearch className="text-slate-500 text-lg" />
+          </div>
+          <input
+            className="w-full"
+            type="text"
+            name="search"
+            value={localSearchTerm}
+            onChange={handleSearch}
+            placeholder="Search for products"
+          />
+          {localSearchTerm && (
+            <button className="pe-3" onClick={clearSearch}>
+              <IoIosClose className="text-slate-500 text-lg" />
+            </button>
+          )}
         </div>
-        <input
-          className="w-full"
-          type="text"
-          name="search"
-          value={localSearchTerm}
-          onChange={handleSearch}
-          placeholder="Search for products"
-        />
-        {localSearchTerm && (
-          <button className="pe-3" onClick={clearSearch}>
-            <IoIosClose className="text-slate-500 text-lg" />
-          </button>
-        )}
-      </div>
+      )}
       <Link
         to="/cart"
         data-count={selectedItems.length}
