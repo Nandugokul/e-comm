@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function ThankYou() {
   return (
     <section className="w-full h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center w-1/3 shadow-xl p-10 rounded-2xl">
+      <div className="flex flex-col items-center lg:w-1/2 xl:1/3 shadow-xl p-10 rounded-2xl">
         <div className="h-20 w-20 bg-green-600 flex items-center justify-center rounded-full">
           <FaCheck className="text-white w-10 h-10" />
         </div>
-        <div className="text-[24px] font-semibold mt-14">
+        <div className="text-[20px] text-center md:text-[24px] font-semibold mt-14">
           Order placed successfully
         </div>
         <div className="text-center my-4 text-[#626264]">
