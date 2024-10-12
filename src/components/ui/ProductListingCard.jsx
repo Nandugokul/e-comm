@@ -1,29 +1,41 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
 import { FaCheck } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeQuantity,
   setItemsAndQuantity,
   removeItem,
+  setItemQuantity,
 } from "../../store/cartDataSlice";
 
 function ProductListingCard({ product }) {
   const soldOut = product.availabilityStatus !== "In Stock";
-  const reviewCount = useMemo(() => Math.ceil(Math.random() * 100), []);
-  const [quantity, setQuantity] = useState(0);
+  const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
   const dispatch = useDispatch();
+  const itemQuantity = useSelector((state) => state.cartData.productQuantity);
+  const quantity = itemQuantity[product.id] || 0;
+
+  const setQuantity = (quantity) => {
+    dispatch(setItemQuantity({ [product.id]: quantity }));
+  };
 
   const handleItemChange = (add) => {
     if (!add && quantity === 1) {
       dispatch(removeItem(product.id));
       setQuantity(0);
     } else {
-      add ? setQuantity((prev) => prev + 1) : setQuantity((prev) => prev - 1);
+      add ? setQuantity(quantity + 1) : setQuantity(quantity - 1);
       dispatch(changeQuantity({ method: add, productId: product.id }));
     }
   };
+
+  useEffect(() => {
+    if (!itemQuantity[product.id]) {
+      setQuantity(0);
+    }
+  }, [dispatch, product.id, itemQuantity]);
 
   const handleSelection = (e) => {
     if (e.target.checked) {

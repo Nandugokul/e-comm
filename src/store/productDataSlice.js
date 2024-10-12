@@ -36,6 +36,10 @@ const productDataSlice = createSlice({
       }
       state.filterState = { ...state.filterState, ...action.payload };
     },
+    clearProductData(state) {
+      state.productList = [];
+      state.data = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,5 +60,6 @@ const productDataSlice = createSlice({
   },
 });
 
-export const { setFilterAndSearchState } = productDataSlice.actions;
+export const { setFilterAndSearchState, clearProductData } =
+  productDataSlice.actions;
 export default productDataSlice.reducer;

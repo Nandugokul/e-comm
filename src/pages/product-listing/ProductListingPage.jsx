@@ -4,7 +4,7 @@ import NavBar from "../../components/ui/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useRef } from "react";
-import { getProductData } from "../../store/productDataSlice";
+import { clearProductData, getProductData } from "../../store/productDataSlice";
 function ProductListingPage() {
   const allProductsList = useSelector((state) => state.productData.productList);
   const allProductsData = useSelector((state) => state.productData.data);
@@ -37,6 +37,10 @@ function ProductListingPage() {
         search: allFilterData.search,
       })
     );
+    return () => {
+      console.log("Component unmounting, clearing product data");
+      dispatch(clearProductData());
+    };
   }, [dispatch, allFilterData.category, allFilterData.search]);
 
   console.log(selectedItems);

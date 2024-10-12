@@ -1,7 +1,11 @@
+import { useSelector } from "react-redux";
 import NavBar from "../../components/ui/NavBar";
 import CartProductListingCard from "./components/CartProductListingCard";
 
 function CartPage() {
+  const selectedItems = useSelector(
+    (state) => state.cartData.selectedItemsAndQuantity
+  );
   return (
     <>
       <NavBar />
@@ -24,10 +28,13 @@ function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                <CartProductListingCard />
-                <CartProductListingCard />
-                <CartProductListingCard />
-                <CartProductListingCard />
+                {selectedItems.map((item, index) => (
+                  <CartProductListingCard
+                    key={item.id}
+                    product={item}
+                    index={index}
+                  />
+                ))}
               </tbody>
             </table>
           </div>
