@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MdOutlineReplay } from "react-icons/md";
-// import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
+import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
 import { getCategories } from "../../pages/product-listing/api-services/product-listing";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +12,9 @@ function FilterSection() {
   const [categoryList, setCategoryList] = useState([]);
   const filterState = useSelector((state) => state.productData.filterState);
   const dispatch = useDispatch();
+
+  const [layout, setLayout] = useState("grid");
+
   const setDropDown = async () => {
     const response = await getCategories();
     setCategoryList(response.data);
@@ -21,6 +24,19 @@ function FilterSection() {
     dispatch(
       setFilterAndSearchState({ [event.target.name]: event.target.value })
     );
+  };
+
+  useEffect(() => {
+    const savedLayout = localStorage.getItem("layout");
+    if (savedLayout) {
+      setLayout(savedLayout);
+    }
+  }, []);
+
+  const handleLayoutChange = () => {
+    const newLayout = layout === "grid" ? "list" : "grid";
+    setLayout(newLayout);
+    localStorage.setItem("layout", newLayout);
   };
 
   const handleReset = () => {
@@ -74,14 +90,26 @@ function FilterSection() {
           <span>Reset</span>
         </button>
       </div>
-      {/* <div className="flex space-x-3 items-center">
-        <button className="bg-selectBG rounded-md p-2">
+      <div className="flex space-x-3 items-center mb-4">
+        <button
+          className={` rounded-md p-2 text-[#9e9f9f] ${
+            layout === "grid" ? "bg-selectBG text-black" : null
+          }`}
+          onClick={() => handleLayoutChange("grid")}
+        >
           <TbLayoutGrid className="text-xl" />
         </button>
-        <button>
-          <TbLayoutList className="text-xl text-[#9e9f9f]" />
+        <button
+          className={`rounded-md p-2 text-[#9e9f9f] ${
+            layout === "list"
+              ? "bg-selectBG text-text-[#9e9f9f] text-black"
+              : null
+          }`}
+          onClick={() => handleLayoutChange("list")}
+        >
+          <TbLayoutList className="text-xl" />
         </button>
-      </div> */}
+      </div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useMemo } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
-import { FaCheck } from "react-icons/fa";
+// import { FaCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeQuantity,
@@ -38,16 +38,16 @@ function ProductListingCard({ product }) {
     }
   }, [dispatch, product.id, itemQuantity]);
 
-  const handleSelection = (e) => {
-    if (e.target.checked) {
-      toast.success("Product Added to Cart");
-      setQuantity(1);
-      dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
-    } else {
-      dispatch(removeItem(product.id));
-      setQuantity(0);
-    }
-  };
+  // const handleSelection = (e) => {
+  //   if (e.target.checked) {
+  //     toast.success("Product Added to Cart");
+  //     setQuantity(1);
+  //     dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
+  //   } else {
+  //     dispatch(removeItem(product.id));
+  //     setQuantity(0);
+  //   }
+  // };
 
   const handleNotification = () => {};
   const handleAddToCart = () => {
@@ -123,7 +123,7 @@ function ProductListingCard({ product }) {
           Sold Out
         </small>
       )}
-      <label
+      {/* <label
         className={`${
           quantity ? "bg-primaryColor grid place-items-center" : "hidden"
         } absolute ${
@@ -139,7 +139,7 @@ function ProductListingCard({ product }) {
         id={`${"checkbox " + product.id}`}
         type="checkbox"
         className="hidden"
-      />
+      /> */}
     </main>
   );
 }
