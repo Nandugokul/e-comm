@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MdOutlineReplay } from "react-icons/md";
-import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
+// import { TbLayoutGrid, TbLayoutList } from "react-icons/tb";
 import { getCategories } from "../../pages/product-listing/api-services/product-listing";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilterAndSearchState } from "../../store/productDataSlice";
@@ -70,14 +70,14 @@ function FilterSection() {
           <span>Reset</span>
         </button>
       </div>
-      <div className="flex space-x-3 items-center">
+      {/* <div className="flex space-x-3 items-center">
         <button className="bg-selectBG rounded-md p-2">
           <TbLayoutGrid className="text-xl" />
         </button>
         <button>
           <TbLayoutList className="text-xl text-[#9e9f9f]" />
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }
