@@ -128,7 +128,7 @@ function FilterSection() {
           </div>
         ) : null}
 
-        <div className="flex space-x-3 ">
+        <div className="hidden md:flex space-x-3 ">
           <button
             className={` rounded-md p-2 text-[#9e9f9f] ${
               layout === "grid" ? "bg-selectBG text-black" : null
