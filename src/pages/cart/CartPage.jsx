@@ -65,9 +65,11 @@ function CartPage() {
               ${totalPayable.toFixed(2)}
             </span>
           </div>
-          <button className="bg-primaryColor py-2 px-4 rounded-md text-my14 font-semibold text-white w-full mt-4">
-            Proceed to checkout
-          </button>
+          <div className="flex w-full items-center justify-center bg-primaryColor rounded-md text-my14 font-semibold text-white mt-4">
+            <Link to={"/thank-you"} className=" py-2 px-4 ">
+              Proceed to checkout
+            </Link>
+          </div>
           <div className="flex w-full items-center justify-center">
             <Link to="/" className="text-my14 font-semibold mt-4">
               Back to Shopping

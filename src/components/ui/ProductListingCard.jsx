@@ -39,9 +39,8 @@ function ProductListingCard({ product }) {
   }, [dispatch, product.id, itemQuantity]);
 
   const handleSelection = (e) => {
-    toast.success("Product Added to Cart");
-
     if (e.target.checked) {
+      toast.success("Product Added to Cart");
       setQuantity(1);
       dispatch(setItemsAndQuantity({ ...product, quantity: 1 }));
     } else {
@@ -66,7 +65,7 @@ function ProductListingCard({ product }) {
     <main className="p-4 border-borderColor border rounded-[8px] flex relative flex-col h-full group">
       <div className="flex justify-center items-center mb-2">
         <img
-          className="group-hover:scale-105 transition-all duration-150 ease-in-out w-[150px] h-[150px] object-cover"
+          className="group-hover:scale-105 mb-2 transition-all duration-150 ease-in-out w-[150px] h-[150px] object-cover"
           src={product.thumbnail}
           alt={product.title}
           loading="lazy"

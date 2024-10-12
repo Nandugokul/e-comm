@@ -6,6 +6,7 @@ import CartPage from "./pages/cart/CartPage.jsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import { Toaster } from "react-hot-toast";
+import ThankYou from "./pages/thank-you/ThankYou.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <CartPage />,
+  },
+  {
+    path: "/thank-you",
+    element: <ThankYou />,
   },
 ]);
 
