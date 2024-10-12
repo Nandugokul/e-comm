@@ -13,7 +13,7 @@ function CartPage() {
 
   useEffect(() => {
     dispatch(setTotalPayable());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

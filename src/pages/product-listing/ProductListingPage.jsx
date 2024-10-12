@@ -10,9 +10,6 @@ function ProductListingPage() {
   const allProductsData = useSelector((state) => state.productData.data);
   const dispatch = useDispatch();
   const allFilterData = useSelector((state) => state.productData.filterState);
-  const selectedItems = useSelector(
-    (state) => state.cartData.selectedItemsAndQuantity
-  );
   const skip = useRef(0);
 
   const LoadMoreProducts = async () => {

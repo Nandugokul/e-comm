@@ -22,7 +22,7 @@ function CartProductListingCard({ product }) {
   useEffect(() => {
     setSubTotal((product.price * quantity).toFixed(2));
     dispatch(setTotalPayable());
-  }, [quantity, product.price]);
+  }, [quantity, product.price, dispatch]);
 
   const handleQuantityChange = (add) => {
     if (!add && quantity === 1) {
