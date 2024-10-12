@@ -8,6 +8,7 @@ import {
   setItemQuantity,
   setTotalPayable,
 } from "../../../store/cartDataSlice";
+import { IoIosClose } from "react-icons/io";
 
 function CartProductListingCard({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
@@ -17,6 +18,11 @@ function CartProductListingCard({ product }) {
   const [subTotal, setSubTotal] = useState(0);
   const setQuantity = (quantity) => {
     dispatch(setItemQuantity({ [product.id]: quantity }));
+    dispatch(setTotalPayable());
+  };
+
+  const handleProudctRemove = () => {
+    dispatch(removeItem(product.id));
   };
 
   useEffect(() => {
@@ -75,7 +81,14 @@ function CartProductListingCard({ product }) {
           </button>
         </div>
       </td>
-      <td className="font-semibold text-end">${subTotal}</td>
+      <td className="font-semibold text-end">
+        <div className="flex items-center justify-end space-x-4">
+          <div>${subTotal}</div>
+          <button onClick={handleProudctRemove}>
+            <IoIosClose className="text-slate-500 text-lg" />
+          </button>
+        </div>
+      </td>
     </tr>
   );
 }
