@@ -37,7 +37,7 @@ function FilterSection() {
       <div className="flex space-x-4 items-center">
         <select
           onChange={handleFilterChange}
-          className="w-48"
+          className="w-1/3 md:w-48"
           name="category"
           value={filterState.category}
         >
@@ -54,7 +54,7 @@ function FilterSection() {
         <select
           value={filterState.rating}
           onChange={handleFilterChange}
-          className="w-48"
+          className="w-1/3 md:w-48"
           name="rating"
         >
           <option value="" disabled>
