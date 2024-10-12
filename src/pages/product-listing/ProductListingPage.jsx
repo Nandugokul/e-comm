@@ -40,7 +40,12 @@ function ProductListingPage() {
     return () => {
       dispatch(clearProductData());
     };
-  }, [dispatch, allFilterData.category, allFilterData.search]);
+  }, [
+    dispatch,
+    allFilterData.category,
+    allFilterData.search,
+    allFilterData.rating,
+  ]);
 
   return (
     <section>
