@@ -73,12 +73,12 @@ function FilterSection() {
       <div className="flex space-x-4 items-center">
         <select
           onChange={handleFilterChange}
-          className="w-1/3 md:w-48"
+          className="w-1/3 md:max-w-36 "
           name="category"
           value={filterState.category}
         >
           <option value="" disabled>
-            Select a category
+            Category
           </option>
           {categoryList.map((category, index) => (
             <option key={category + index} value={category}>
@@ -90,11 +90,11 @@ function FilterSection() {
         <select
           value={filterState.rating}
           onChange={handleFilterChange}
-          className="w-1/3 md:w-48"
+          className="w-1/3 md:max-w-36"
           name="rating"
         >
           <option value="" disabled>
-            Select Rating
+            Rating
           </option>
           <option value="3">Above 3</option>
           <option value="4">Above 4</option>
@@ -107,12 +107,12 @@ function FilterSection() {
           } text-my14 flex items-center space-x-1 opacity-70`}
         >
           <MdOutlineReplay />
-          <span>Reset</span>
+          <span className="hidden sm:block">Reset</span>
         </button>
       </div>
       <div className="flex items-center space-x-6">
         {tempProductList.length && layout === "list" ? (
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 ">
             <span className="text-lg font-semibold">
               {tempProductList.length}
             </span>
@@ -128,7 +128,7 @@ function FilterSection() {
           </div>
         ) : null}
 
-        <div className="hidden md:flex space-x-3 ">
+        <div className="flex ms-4">
           <button
             className={` rounded-md p-2 text-[#9e9f9f] ${
               layout === "grid" ? "bg-selectBG text-black" : null

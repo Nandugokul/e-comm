@@ -66,38 +66,35 @@ function ProductListingRow({ product }) {
   };
 
   return (
-    <section className="grid grid-cols-9  items-center p-4 border-b rounded-md">
-      <div className="col-span-5 flex items-center space-x-5 ">
+    <section className="grid grid-cols-9 md:grid-cols-8  items-center p-4 border-b rounded-md gap-2">
+      <div className="col-span-full md:col-span-4 flex items-center space-x-5">
         <img
           className="group-hover:scale-105 transition-all duration-150 ease-in-out w-[100px] h-[100px] object-cover"
           src={product.thumbnail}
           alt={product.title}
           loading="lazy"
         />
-        <div className=" max-w-48">
+        <div className="md:max-w-48">
           <h6 className="font-semibold text-lg">{product.title}</h6>
         </div>
       </div>
-      <div>
+      <div className="col-span-2 md:col-span-1">
         <div className="flex space-x-1 items-center bg-selectBG px-1 mb-1 rounded-[4px] w-fit">
           <img src={starIcon} className="w-3" alt="stars" />
           <small>{product.rating.toFixed(1)}</small>
         </div>
         <small className="text-gray-500">{reviewCount} reviews</small>
       </div>
-      <h2 className={`font-semibold`}>${product.price}</h2>
+      <h2 className={`font-semibold col-span-2 md:col-span-1`}>
+        ${product.price}
+      </h2>
       {soldOut ? (
-        <button
-          onClick={() => {
-            toast.success("You will be notified on stock availability");
-          }}
-          className="border-primaryColor border font-semibold text-primaryColor  py-2 px-4 rounded-md"
-        >
-          Notify
-        </button>
+        <div className="text-center col-span-3 md:col-span-1">
+          <div>----</div>
+        </div>
       ) : (
         <div
-          className={` grid grid-cols-3 items-center w-fullljustify-between border-borderColor border rounded-md`}
+          className={` grid  col-span-3 md:col-span-1 grid-cols-3 items-center w-fullljustify-between border-borderColor border rounded-md`}
         >
           <button
             disabled={quantity === 0}
@@ -116,13 +113,18 @@ function ProductListingRow({ product }) {
         </div>
       )}
       {soldOut ? (
-        <div className="flex items-center justify-end">
-          <small className=" w-fit rounded-md px-4 py-1 bg-selectBG text-[12px]">
-            Sold Out
-          </small>
+        <div className="col-span-2 md:col-span-1 text-end">
+          <button
+            onClick={() => {
+              toast.success("You will be notified on stock availability");
+            }}
+            className="border-primaryColor border font-semibold text-primaryColor col-span-2 md:col-span-1 py-2 px-4 rounded-md"
+          >
+            Notify
+          </button>
         </div>
       ) : (
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end col-span-2 md:col-span-1">
           <label
             className={`${
               quantity ? "bg-primaryColor" : ""
