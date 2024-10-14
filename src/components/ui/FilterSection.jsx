@@ -117,7 +117,11 @@ function FilterSection() {
               <span className="text-lg font-semibold">
                 {tempProductList.length}
               </span>
-              <span>products selected</span>
+              <span>
+                {tempProductList.length === 1
+                  ? "product selected"
+                  : "products selected"}
+              </span>
               <span>
                 <button
                   onClick={handleAddToCart}
@@ -156,7 +160,11 @@ function FilterSection() {
           <span className="text-lg font-semibold">
             {tempProductList.length}
           </span>
-          <span>products selected</span>
+          <span>
+            {tempProductList.length === 1
+              ? "product selected"
+              : "products selected"}
+          </span>{" "}
           <span>
             <button
               onClick={handleAddToCart}
