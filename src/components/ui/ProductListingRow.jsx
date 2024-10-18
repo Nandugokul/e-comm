@@ -10,6 +10,7 @@ import {
 } from "../../store/productDataSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { IoCartOutline } from "react-icons/io5";
 
 function ProductListingRow({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
@@ -134,9 +135,10 @@ function ProductListingRow({ product }) {
         <>
           <Link
             to={"/cart"}
-            className="bg-primaryColor btn py-[0.5rem] px-[0.5rem] text-center text-white rounded-md font-semibold"
+            className=" btn underline underline-offset-2 flex items-center justify-center text-center text-black rounded-md font-semibold"
           >
-            In cart
+            {/* <IoCartOutline className="text-[0.3rem] sm:text-[28px] text-white" /> */}
+            Go to cart
           </Link>
         </>
       ) : (
