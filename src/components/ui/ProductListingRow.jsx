@@ -1,36 +1,28 @@
 /* eslint-disable react/prop-types */
-
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import starIcon from "../../../public/Icons-images/SVG/star.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import {
   addToTempProductList,
   removeFromTempProductList,
-  setTempListFromCart,
   setTempListQuantity,
 } from "../../store/productDataSlice";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 function ProductListingRow({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
   const quantity = useSelector(
     (state) => state.productData.tempProductListQuantity[product.id] || 0
   );
-  const cartItems = useSelector(
-    (state) => state.cartData.selectedItemsAndQuantity
-  );
+
   const dispatch = useDispatch();
   const cartItemQuantity = useSelector(
     (state) => state.cartData.productQuantity
   );
   const soldOut = product.availabilityStatus !== "In Stock";
-
-  useEffect(() => {
-    dispatch(
-      setTempListFromCart({ quantity: cartItemQuantity, product: cartItems })
-    );
-  }, []);
-
+  const [alreadyInCart, setAlreadyInCart] = useState(false);
   const handleSelectionChange = (event) => {
     if (event.target.checked) {
       dispatch(addToTempProductList(product));
@@ -55,7 +47,6 @@ function ProductListingRow({ product }) {
 
   const handleQuantityChange = (add) => {
     const newQuantity = add ? quantity + 1 : quantity > 0 ? quantity - 1 : 0;
-
     dispatch(
       setTempListQuantity({
         id: product.id,
@@ -65,8 +56,14 @@ function ProductListingRow({ product }) {
     );
   };
 
+  useEffect(() => {
+    if (cartItemQuantity[product.id]) {
+      setAlreadyInCart(true);
+    }
+  }, []);
+
   return (
-    <section className="grid grid-cols-3 gap-y-4 md:gap-4 md:gap-y-4 md:grid-cols-8   items-center p-4 border-b rounded-md gap-2">
+    <section className="grid grid-cols-3 gap-y-4 md:gap-4 md:gap-y-4 md:grid-cols-8 items-center p-4 border-b rounded-md gap-2">
       <div className="col-span-2 md:col-span-4 flex items-center md:space-x-4 relative">
         <img
           className="group-hover:scale-105 transition-all  duration-150 ease-in-out w-[100px] h-[100px] object-cover"
@@ -88,20 +85,22 @@ function ProductListingRow({ product }) {
       <div className="md:hidden">
         {soldOut ? (
           <div className="col-span-2 md:col-span-1 text-end">----</div>
+        ) : alreadyInCart ? (
+          <div className="col-span-2 md:col-span-1 text-end">----</div>
         ) : (
           <div className="flex items-center justify-end col-span-2 md:col-span-1">
             <label
               className={`${
                 quantity ? "bg-primaryColor" : ""
               } ms-4 grid  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
-              htmlFor={`${"checkbox " + product.id}`}
+              htmlFor={`checkbox-${product.id}`}
             >
               {quantity ? <FaCheck className="text-white w-3" /> : null}
             </label>
 
             <input
               onChange={handleSelectionChange}
-              id={`${"checkbox " + product.id}`}
+              id={`checkbox-${product.id}`}
               type="checkbox"
               className="hidden"
             />
@@ -116,9 +115,9 @@ function ProductListingRow({ product }) {
         </div>
         <small className="text-gray-500">{reviewCount} reviews</small>
       </div>
-      <h2 className={`font-semibold `}>${product.price}</h2>
+      <h2 className="font-semibold">${product.price}</h2>
       {soldOut ? (
-        <div className=" text-end">
+        <div className="text-end">
           <div className="hidden md:block col-span-2 md:col-span-1 text-center">
             ----
           </div>
@@ -131,13 +130,20 @@ function ProductListingRow({ product }) {
             Notify
           </button>
         </div>
+      ) : alreadyInCart ? (
+        <>
+          <Link
+            to={"/cart"}
+            className="bg-primaryColor btn py-[0.5rem] text-center text-white rounded-md font-semibold"
+          >
+            Cart
+          </Link>
+        </>
       ) : (
-        <div
-          className={` grid  grid-cols-3 items-center w-fullljustify-between border-borderColor border rounded-md`}
-        >
+        <div className="grid grid-cols-3 items-center w-full justify-between border-borderColor border rounded-md">
           <button
             disabled={quantity === 0}
-            className="py-2 text-center hover:bg-selectBG "
+            className="py-2 text-center hover:bg-selectBG"
             onClick={() => handleQuantityChange(false)}
           >
             -
@@ -163,20 +169,24 @@ function ProductListingRow({ product }) {
               Notify
             </button>
           </div>
+        ) : alreadyInCart ? (
+          <div className="col-span-2 md:col-span-1 text-end">----</div>
         ) : (
           <div className="flex items-center justify-end col-span-2 md:col-span-1">
             <label
               className={`${
-                quantity ? "bg-primaryColor" : ""
+                quantity || alreadyInCart ? "bg-primaryColor" : ""
               } ms-4 grid  top-4 h-5 w-5 px-[2px] border-2 rounded-[4px] border-primaryColor cursor-pointer`}
-              htmlFor={`${"checkbox " + product.id}`}
+              htmlFor={`checkbox-${product.id}`}
             >
-              {quantity ? <FaCheck className="text-white w-3" /> : null}
+              {quantity || alreadyInCart ? (
+                <FaCheck className="text-white w-3" />
+              ) : null}
             </label>
 
             <input
               onChange={handleSelectionChange}
-              id={`${"checkbox " + product.id}`}
+              id={`checkbox-${product.id}`}
               type="checkbox"
               className="hidden"
             />

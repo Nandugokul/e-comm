@@ -63,8 +63,32 @@ const cartDataSlice = createSlice({
     },
     setCartItems: (state, action) => {
       const { productList, quantity } = action.payload;
-      state.selectedItemsAndQuantity = productList;
-      state.productQuantity = quantity;
+
+      // Merge productList into selectedItemsAndQuantity array
+      productList.forEach((newProduct) => {
+        const existingProductIndex = state.selectedItemsAndQuantity.findIndex(
+          (item) => item.id === newProduct.id
+        );
+        if (existingProductIndex !== -1) {
+          // If the product already exists, update its quantity
+          state.selectedItemsAndQuantity[existingProductIndex].quantity +=
+            newProduct.quantity;
+        } else {
+          // Otherwise, add the new product
+          state.selectedItemsAndQuantity.push(newProduct);
+        }
+      });
+
+      // Merge quantity into productQuantity object
+      Object.keys(quantity).forEach((productId) => {
+        if (state.productQuantity[productId]) {
+          // If the product quantity already exists, sum the quantities
+          state.productQuantity[productId] += quantity[productId];
+        } else {
+          // Otherwise, set the new quantity
+          state.productQuantity[productId] = quantity[productId];
+        }
+      });
     },
   },
 });

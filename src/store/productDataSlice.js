@@ -68,6 +68,11 @@ const productDataSlice = createSlice({
       state.tempProductListQuantity[id] = quantity;
     },
 
+    clearTempProductList: (state) => {
+      state.tempProductList = [];
+      state.tempProductListQuantity = {};
+    },
+
     setTempListFromCart: (state, action) => {
       const { product, quantity } = action.payload;
       state.tempProductListQuantity = quantity;
@@ -101,6 +106,7 @@ export const {
   addToTempProductList,
   removeFromTempProductList,
   setTempListQuantity,
+  clearTempProductList,
   setTempListFromCart,
 } = productDataSlice.actions;
 export default productDataSlice.reducer;

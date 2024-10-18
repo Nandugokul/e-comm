@@ -5,6 +5,7 @@ import { getCategories } from "../../pages/product-listing/api-services/product-
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearProductData,
+  clearTempProductList,
   setFilterAndSearchState,
 } from "../../store/productDataSlice";
 import { setLayoutState } from "../../store/layoutSlice";
@@ -28,6 +29,7 @@ function FilterSection() {
         quantity: tempProductQuantity,
       })
     );
+    dispatch(clearTempProductList());
     toast.success(`${tempProductList.length} items added to cart`);
   };
 
@@ -81,8 +83,8 @@ function FilterSection() {
             <option value="" disabled>
               Category
             </option>
-            {categoryList.map((category, index) => (
-              <option key={category + index} value={category}>
+            {categoryList.map((category) => (
+              <option key={crypto.randomUUID()} value={category}>
                 {category}
               </option>
             ))}

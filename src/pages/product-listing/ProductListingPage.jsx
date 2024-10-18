@@ -87,9 +87,15 @@ function ProductListingPage() {
                 )
                 .map((product) =>
                   layout === "grid" ? (
-                    <ProductListingCard key={product.id} product={product} />
+                    <ProductListingCard
+                      key={crypto.randomUUID()}
+                      product={product}
+                    />
                   ) : (
-                    <ProductListingRow key={product.id} product={product} />
+                    <ProductListingRow
+                      key={crypto.randomUUID()}
+                      product={product}
+                    />
                   )
                 )
             ) : (

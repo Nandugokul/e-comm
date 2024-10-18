@@ -4,6 +4,7 @@ import CartProductListingCard from "./components/CartProductListingCard";
 import { useEffect } from "react";
 import { clearCartItems, setTotalPayable } from "../../store/cartDataSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { setTempListFromCart } from "../../store/productDataSlice";
 
 function CartPage() {
   const selectedItems = useSelector(
@@ -12,16 +13,31 @@ function CartPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const totalPayable = useSelector((state) => state.cartData.totalPayable);
-
+  const tempProductList = useSelector(
+    (state) => state.productData.tempProductList
+  );
+  const tempProductQuantity = useSelector(
+    (state) => state.productData.tempProductListQuantity
+  );
   useEffect(() => {
     dispatch(setTotalPayable());
   }, [dispatch, selectedItems.length]);
-
   const handleCheckout = () => {
     dispatch(clearCartItems());
     navigate("/thank-you");
   };
+  const cartItems = useSelector(
+    (state) => state.cartData.selectedItemsAndQuantity
+  );
 
+  useEffect(() => {
+    dispatch(
+      setTempListFromCart({
+        quantity: tempProductQuantity,
+        product: tempProductList,
+      })
+    );
+  }, [cartItems, dispatch]);
   return (
     <>
       <header className="sticky top-0 bg-white z-50">
@@ -49,7 +65,7 @@ function CartPage() {
                 <tbody>
                   {selectedItems.map((item, index) => (
                     <CartProductListingCard
-                      key={item.id}
+                      key={crypto.randomUUID()}
                       product={item}
                       index={index}
                     />
