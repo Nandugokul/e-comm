@@ -134,9 +134,9 @@ function ProductListingRow({ product }) {
         <>
           <Link
             to={"/cart"}
-            className="bg-primaryColor btn py-[0.5rem] text-center text-white rounded-md font-semibold"
+            className="bg-primaryColor btn py-[0.5rem] px-[0.5rem] text-center text-white rounded-md font-semibold"
           >
-            Cart
+            In cart
           </Link>
         </>
       ) : (
