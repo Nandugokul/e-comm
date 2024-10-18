@@ -60,7 +60,7 @@ function ProductListingRow({ product }) {
     if (cartItemQuantity[product.id]) {
       setAlreadyInCart(true);
     }
-  }, []);
+  }, [cartItemQuantity]);
 
   return (
     <section className="grid grid-cols-3 gap-y-4 md:gap-4 md:gap-y-4 md:grid-cols-8 items-center p-4 border-b rounded-md gap-2">
