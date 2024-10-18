@@ -10,7 +10,7 @@ import {
 } from "../../store/productDataSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { IoCartOutline } from "react-icons/io5";
+// import { IoCartOutline } from "react-icons/io5";
 
 function ProductListingRow({ product }) {
   const reviewCount = useMemo(() => Math.ceil(Math.random() * 1000), []);
